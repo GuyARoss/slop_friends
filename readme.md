@@ -13,3 +13,4 @@ this repo has two examples:
 1) can they make program to add two numbers (yes, very over engineered)
 
 2) can they find the ai in the group (lol)
+    (i hit my codex usage limit, so couldn't finish)
