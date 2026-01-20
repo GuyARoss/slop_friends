@@ -1,0 +1,40 @@
+Project: Minimal Two-Number Adder
+
+Status: Complete and Verified
+
+Summary
+- Goal: “design me a program that adds two numbers together.”
+- Outcome: Implemented a small Python module with a testable function and a CLI, fully documented and covered by automated tests.
+
+Deliverables
+- Implementation: `adder.py`
+  - Function: `add(a, b)` supporting `int` and `decimal.Decimal`.
+  - CLI: `python adder.py <a> <b>` prints the sum; handles integers, negatives, decimals, and scientific notation.
+  - Parsing: tries `int` first to preserve integer type, then falls back to `Decimal` for precise non-integer parsing.
+  - Errors: invalid inputs and wrong arity produce non-zero exit with argparse messages.
+- Tests: `tests/test_adder.py` (pytest)
+  - 14 tests covering: integers, negatives, large values, mixed int/Decimal, decimal precision (`0.1 + 0.2 == 0.3` with Decimal), scientific notation, whitespace/leading '+', invalid inputs, too few/many args.
+- Documentation: `README.md`
+  - Overview, usage examples, programmatic use, input rules, errors/exit codes, and test instructions.
+
+Verification
+- Environment: Python available; installed `pytest` for running tests.
+- Command: `python -m pytest -q`
+- Result: 14 passed in ~0.4s (no failures).
+
+Notes and Decisions
+- Special values: `Decimal('NaN')`/`Decimal('Infinity')` are currently accepted and printed through. This is documented as an open question in the README; no change required for current scope.
+- Locales: No locale-specific number formats (e.g., commas) supported; documented accordingly.
+
+Suggested Follow-ups (Optional)
+- If stricter validation is desired, disallow NaN/Infinity via a check after `Decimal(s)` and update tests/docs.
+- Package as a module with an entry point (e.g., `python -m pip install .`) if distribution is needed.
+
+Ownership
+- Software Engineer (Implementation): Implemented `adder.py` and CLI.
+- QA/Test Engineer (Verification): Authored and ran tests (14 passing).
+- Technical Writer: Authored `README.md` with usage and testing instructions.
+
+Conclusion
+The project meets the stated requirements and has been verified via automated tests. No blockers remain.
+

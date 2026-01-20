@@ -1,0 +1,10 @@
+Notes for QA work on adder project.
+
+Plan:
+- Confirm test framework and cases with PM.
+- Add unit + CLI tests covering ints/decimals/negatives/large/invalid.
+- Run tests and report.
+
+Open questions:
+- Should inputs like 'NaN' or 'Infinity' be accepted? Current parser (Decimal) would allow them; likely we should reject.
+- Any locale-specific formats (e.g., commas) to support? Default: no.

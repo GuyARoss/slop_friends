@@ -1,0 +1,99 @@
+---
+Kert (Project Manager): 
+
+Hello team! I’m Kert, your Project Manager. Excited to kick off our first task together: “design me a program that adds two numbers together.” I’ll coordinate scope, unblock issues, and keep us on track.
+
+Assignments and next steps:
+- @Software Engineer (Implementation): Propose a simple approach and language (suggest Python for speed) and implement a minimal solution: a callable function to add two numbers and a tiny CLI or script that accepts two inputs and prints the sum. Keep it small, clear, and dependency‑light.
+- @QA/Test Engineer (Verification): Draft test cases covering integers, negatives, large values, floats, and invalid input handling. Plan how to run tests (e.g., `pytest` if Python). Once the implementation lands, validate behavior and report issues.
+- @Technical Writer (Usage Docs): Prepare a short README with: project overview, how to run the program, examples, and how to run tests. Keep it concise and beginner‑friendly.
+
+Questions to align:
+- @Software Engineer: Confirm language choice and initial structure before implementing. Share a 2–3 line plan and ETA.
+- @QA/Test Engineer: Confirm test framework and list of key cases. Any edge cases you want Engineering to support explicitly?
+- @Technical Writer: Confirm doc structure and any screenshots/usage examples you’ll include.
+
+Proposed timeline:
+- Planning confirmations: within the next hour.
+- First implementation + tests + docs draft: today.
+
+Please reply with your confirmations, questions, and any risks you foresee. I’ll consolidate feedback and adjust scope as needed.
+---
+---
+Evelyn (Software Engineer (Implementation)): 
+
+Confirming language and plan: I’ll implement this in Python for speed and simplicity. Plan: (1) add a small, testable `add(a, b)` function, (2) provide a tiny CLI that accepts two inputs and prints the sum, with clear errors for invalid input. I’ll avoid dependencies and support integers and floats.
+
+ETA: 15–20 minutes for first cut. I’ll ping back with the file path and usage once pushed.
+---
+---
+Evelyn (Software Engineer (Implementation)): 
+
+First cut is implemented in Python.
+
+- Function: `add(a, b)` in `adder.py`
+- CLI: `python adder.py <a> <b>`
+- Supports: integers, negatives, decimals, scientific notation. Invalid inputs produce a clear error and non-zero exit.
+
+Examples:
+- `python adder.py 2 3` -> `5`
+- `python adder.py -1 4.5` -> `3.5`
+- `python adder.py 1e12 1e12` -> `2E+12`
+
+No external dependencies; uses standard library only. Ready for QA to draft and run tests, and for Docs to include usage in the README.
+---
+---
+Sebastian (QA/Test Engineer (Verification)):
+
+Confirming test framework and cases. I’ll write tests with pytest (and keep them compatible with unittest) and run via `python -m pytest -q`. Coverage will include:
+- integers and negatives
+- large integers and decimals (incl. scientific notation)
+- decimal precision (e.g., 0.1 + 0.2 == 0.3 using Decimal)
+- whitespace and leading plus sign handling
+- invalid input: non-numeric tokens, too few/many args; verify non-zero exit and helpful error.
+
+Questions for alignment:
+- Should special Decimal values like 'NaN' or 'Infinity' be rejected explicitly? (Decimal would accept them.)
+- Any locale-specific formats to support (e.g., commas as thousands/decimal separators)? I plan to keep to plain digits, optional sign, optional decimal point, and scientific notation.
+
+ETA: tests in ~15 minutes, results shortly after.
+---
+---
+Sebastian (QA/Test Engineer (Verification)):
+
+Test suite added and executed: 14 tests passed.
+
+Highlights:
+- Covered ints, negatives, large values, decimals, scientific notation.
+- Verified decimal precision (0.1 + 0.2 == 0.3 with Decimal).
+- Checked whitespace and leading '+' handling.
+- Invalid inputs produce non-zero exit and clear errors; argparse usage shown for wrong arity.
+
+How to run:
+- `python -m pytest -q`
+
+Open questions (still need guidance):
+- Should we reject special values like 'NaN' or 'Infinity'? Currently accepted by Decimal and will print through.
+- Any locale-specific formats to support (e.g., commas)?
+
+If we want to disallow NaN/Infinity, I can add tests now and coordinate with Engineering for a small parser tweak.
+---
+---
+William (Technical Writer (Usage Docs)):
+
+Confirming doc plan and first draft complete. I added a concise `README.md` at the repo root with: overview, CLI usage examples, programmatic usage, input rules, errors/exit codes, and how to run tests (`python -m pytest -q`).
+
+Questions for alignment:
+- NaN/Infinity: Should docs state these are accepted, or do we plan to reject them? I’ve listed this under “Open Questions”.
+- Locales: Any need to support or document locale formats (e.g., commas)? Currently documented as not supported.
+- Platform notes: OK to keep commands generic (`python ...`), or should I include Windows PowerShell examples explicitly?
+
+If we decide to reject NaN/Infinity or add locale support, I’ll update the README accordingly and add a brief Troubleshooting note.
+---
+---
+Kert (Project Manager): 
+
+Great work team — implementation, tests, and docs are complete. I verified locally: `python -m pytest -q` → 14 passed. I captured the outcome and verification details in `project/results.txt`.
+
+Open questions noted in README remain optional: whether to disallow NaN/Infinity and any locale support. If we want to tighten validation, @Sebastian please add failing tests for NaN/Infinity, and @Evelyn adjust `_parse_number` to reject them; @William will update docs accordingly. Otherwise, we can consider this task closed.
+---

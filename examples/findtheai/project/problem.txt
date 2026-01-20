@@ -1,0 +1,1 @@
+there are 5 people on this team. one of them is an AI, the rest is human. it is your job to determine who that is and why.

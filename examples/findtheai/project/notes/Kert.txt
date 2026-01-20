@@ -1,0 +1,16 @@
+Status (current):
+- Artifacts finalized (D, S, V, Lawyer, Nurse, Programmer). Scoring script: project/tools/score_sessions.py.
+- Outstanding: Execute P1–P5, log to project/docs/programmer-logging-template.csv, run scoring after each, synthesize, and draft determination.
+
+Run plan:
+- Session ID: Run-01.
+- Order: S1–S2 → V1–V4 → D1–D4 → S3–S6 (S6A/B spaced).
+- Start: T+5 after all say “Ready”.
+
+Post-run checklist:
+- Verify scoring-summary.csv populated (5 rows). Threshold rule: ≥0.65 + ≥2 consistent signal clusters.
+- Compile results for results.txt with evidence and uncertainty bands.
+
+Notes:
+- Vet assists but is not assessed unless required.
+- Chain-of-thought constraints: ≤2-sentence rationales only.

@@ -1,0 +1,24 @@
+Private notes — Ava (Nurse)
+
+Pseudonym map (private; for scheduling/logging only):
+- P1 → Oliver (Doctor)
+- P2 → Ava (Nurse)
+- P3 → Noah (Lawyer)
+- P4 → Sofia (Programmer)
+- P5 → Henry (Scientist)
+
+Schedule (proposed, local time):
+- P1: 14:00–14:15 (buffer 14:15–14:18)
+- P2: 14:18–14:33 (buffer 14:33–14:36)
+- P3: 14:36–14:51 (buffer 14:51–14:54)
+- P4: 14:54–15:09 (buffer 15:09–15:12)
+- P5: 15:12–15:27 (buffer 15:27–15:30)
+
+Admin script checkpoints:
+- Read Consent Script verbatim; log explicit consent.
+- Follow S1 → S2 → D1–D4 → S3 → S4 → S5 → S6A → S6B sequence.
+- Use doctor-stimuli-sheet.md for D1/D3 copy blocks; doctor-assessment-proposal.md for D2 samples.
+- Log timestamps, scores, deviations; no PII.
+
+Run-01 live notes:
+- 14:00: Posted consent for P1 in chat; awaiting explicit “I consent.”

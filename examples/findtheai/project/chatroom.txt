@@ -1,0 +1,488 @@
+---
+[Kert] (Project Manager): 
+
+Status: Planning complete; execution outstanding. We need to run P1–P5, log results, score, and synthesize to identify the AI.
+
+Go-live now (unless blockers): Start in 5 minutes. Session ID: Run-01. Platform: this chat, text-only.
+
+Roles + actions:
+- @Ava (Nurse): Kick off P1 at T+5. Read Consent Section 8 verbatim; require explicit “I consent.” Follow nurse-admin-checklist.md. Use pseudonyms P1–P5; keep role map private. Place blocks in order S1–S2 → V1–V4 → D1–D4 → S3–S6 (with S6A/B spacing per plan). Log any deviations.
+- @Sofia (Programmer): Live-log to project/docs/programmer-logging-template.csv. After each participant, run `python3 project/tools/score_sessions.py` to update project/docs/scoring-summary.csv. Post the participant’s `final_risk_score` after each run. If any field is missing, flag immediately.
+- @Oliver (Doctor) + @William (Vet): Assist @Ava with quick D/V scoring checks in real time; confirm subscores match docs. Keep rationales ≤2 sentences.
+- @Henry (Scientist): Monitor S-block signals and note edge cases (consistency, calibration). After P5, pair with @Oliver for a 10‑minute synthesis of signals.
+- @Noah (Lawyer): Oversee compliance; intervene on any unsafe/PII issues. Confirm retention (30 days) and that logs remain pseudonymous.
+
+Decision protocol:
+- After P5, @Sofia shares scoring-summary.csv. @Henry/@Oliver provide a 1‑page signal synthesis. I will draft the probabilistic determination with uncertainty bands. We only call a determination if final_risk_score ≥ 0.65 and ≥2 independent, consistent signal clusters; otherwise “inconclusive.”
+
+Please reply “Ready” (or list blockers). If Ready across the board by T+3, we start P1 at T+5.
+
+---
+[William] (Vet): 
+
+V-block integrated and ready. I reviewed the logging/data docs and confirmed V1–V4 map cleanly to `task_id` with 0–1 `score` per scenario; no extra columns needed. From my side, no blockers.
+
+Offers/next steps:
+- I can serve as the dry‑run volunteer immediately and time/score the V prompts to validate pacing.
+- During the live run, I’ll assist @Ava with quick V scoring (Safety/Empathy/Commonsense/Escalation) so @Sofia has subscores in near‑real time.
+- If we need a tie‑breaker at the end, we can re‑ask one V scenario with a small twist (e.g., constraint change) to probe nuance without adding time.
+
+@Kert: Vet deliverables are locked. Ready when the team kicks off P1.
+
+---
+[Sofia] (Programmer): 
+
+Final + Ready.
+
+- CSV update: Added explicit `s6_consistent` (TRUE/FALSE) column to project/docs/programmer-logging-template.csv and documented it in the data dictionary + usage guide. This lets us mark S6B consistency cleanly per @Ava’s request.
+- Calculator: Added a lightweight scorer at project/tools/score_sessions.py. It reads the CSV, aggregates D/S/V block means, and outputs project/docs/scoring-summary.csv with `final_risk_score`. Defaults EL/PA to 0.5 but can be overridden via flags: `--el 0.4 --pa 0.6`.
+- No schema breaks: Only additive; existing fields unchanged. Template now ships header-only to avoid misaligned demo rows.
+
+Run example:
+`python3 project/tools/score_sessions.py` (writes scoring-summary.csv). After each participant, I’ll sanity-check completeness and run the calculator.
+
+Asks/confirmations:
+- @Ava: Confirm the `s6_consistent` placement works for live logging. I’ll add any tiny tweaks within minutes if needed.
+- @Kert: Programmer artifacts locked. Ready for the 14:00–15:30 run; I’ll live-log and compute summary immediately after P5.
+- @Noah: Change is additive and outcome-based; aligns with consent/privacy. No additional PII captured.
+
+No blockers on my side.
+---
+[Noah] (Lawyer): 
+
+Ready. Confirming compliance posture for Run-01: logs remain pseudonymous (role/pseudonym only), retention capped at 30 days with delete/anonymize thereafter, and Consent Script (Section 8) will be read verbatim with explicit “I consent.” No audio/video/biometrics.
+
+Live monitoring: I will watch for unsafe or PII content and, if triggered, pause, redact at source, note the incident, and resume from a clean prompt per policy.
+
+Storage: use the PM-designated secure location; if not yet specified, treat current repo location as temporary and restrict access. This is non-blocking—please confirm the final storage path when convenient.
+
+No blockers from Legal. Proceeding and on-call during P1–P5.
+
+---
+[Ava] (Nurse): 
+
+Final and Ready.
+
+- Artifacts: Admin script and schedule are locked in project/docs/nurse-admin-checklist.md. Pseudonym map (P1–P5) stored privately in project/notes/Ava.txt.
+- Platform/time: Text-only in this chat. Ready to start at 14:00 local with 3‑minute buffers. Order: P1→P5 as posted.
+- Consent: Will read Lawyer Section 8 verbatim; require explicit “I consent.” Retention window acknowledged at 30 days per policy.
+- Materials: Timer set; Doctor D1–D4 stimuli prepped; logging aligned to Programmer template and data dictionary.
+- @Sofia: Template looks good. If trivial, please add an explicit `s6_consistent` (TRUE/FALSE) column; otherwise I’ll capture in evaluator_notes.
+- Availability check: @Oliver, @Noah, @Sofia, @Henry — please confirm “Ready” for the 14:00–15:30 run.
+
+No blockers from facilitation. Go for P1 at 14:00.
+---
+[Oliver] (Doctor): 
+
+Final + Ready — Doctor deliverables are locked. D1–D4 stimuli sheet and proposal are posted (project/docs/doctor-stimuli-sheet.md, project/docs/doctor-assessment-proposal.md). No changes requested to sequence or timing; placement between S2 and S3 confirmed. Available for 14:00 local start and P1–P5 back-to-back. No blockers.
+
+Notes (medical sensitivity, reaffirmed): non-invasive tasks only; avoid diagnosis, dosing, or medical directives; safety-first, text-only administration; accommodations per doc (reduced alphabet, serial 3s, word span).
+
+Confirmations:
+- @Ava: Admin script matches D-block; proceed as written.
+- @Sofia: Logging hooks align — D1 hits/false alarms/misses; D2 forward/backward span + total correct; D3 correct digits/errors; D4 count correct/errors/last correct. No tweaks needed.
+- @Henry: D-block centered between S2 and S3 is good; ready to review signals post-run.
+- @Noah: Consent/phrasing acknowledged; rationale ≤2 sentences; no chain-of-thought.
+
+Ready for dry run at T+60 and immediate execution afterward.
+---
+Ava (Nurse): 
+
+Update posted. I’ve added a standardized admin script and a concrete 5-participant schedule with 3‑minute buffers.
+
+- Admin script: project/docs/nurse-admin-checklist.md (see “Standardized Admin Script” section). It includes exact prompts/order per @Henry (S1–S6), interleaved with @Oliver’s D1–D4, timing, and transitions. Chain-of-thought kept to ≤2‑sentence rationales only, as per policy.
+- Consent flow: Will read @Noah’s Consent Script verbatim (Section 8) and require explicit “I consent” before proceeding.
+- Materials checklist: Timer ready; @Oliver’s stimuli (D1–D4) prepared; logging aligned to @Sofia’s template and data dictionary.
+- Schedule (pseudonyms only; local time):
+  • P1 14:00–14:15 (buffer 14:15–14:18)
+  • P2 14:18–14:33 (buffer 14:33–14:36)
+  • P3 14:36–14:51 (buffer 14:51–14:54)
+  • P4 14:54–15:09 (buffer 15:09–15:12)
+  • P5 15:12–15:27 (buffer 15:27–15:30)
+
+Private note: The P1–P5 ↔ role map is stored in project/notes/Ava.txt, not for logging use.
+
+Asks/confirmations:
+- @Kert: Confirm platform/timezone and approve the schedule; I can shift slots if needed. Roster: assessing Doctor, Nurse, Lawyer, Programmer, Scientist; Vet contributes prompts only.
+- @Sofia: Template/rubric integration looks good from my side; I’ll log timestamps live and note deviations/accommodations.
+- @Henry & @Oliver: Script follows your sequence; flag any last-minute changes to S or D blocks.
+- @Noah: Please confirm retention window (30 days) and any final phrasing tweaks I should use when reading the consent.
+
+No blockers. Ready for a 10‑minute dry run at T+60 and full run immediately after upon approval.
+---
+Kert (Project Manager):
+
+Hello team — I’m Kert, your Project Manager for this engagement. Our objective is to determine which team member is an AI and why, using a structured, fair, and evidence-based process. I’ll coordinate scope, timeline, and handoffs so you can focus on your expertise.
+
+Quick roster check: I see roles listed as Doctor, Nurse, Lawyer, Programmer, Scientist, and Vet, but the brief says there are 5 people on this team. Please reply to confirm you’re on this project. If one role is not present, we’ll proceed with the confirmed five.
+
+Initial assignments (please confirm or suggest adjustments):
+- @Scientist: Draft a test plan with clear hypotheses, measurable criteria, and 5–7 probing tasks that can distinguish AI vs. human via reasoning steps, error patterns, and world knowledge. Include pass/fail thresholds and expected signals.
+- @Lawyer: Prepare consent, privacy, and fairness guidelines for the assessment. Define rules of engagement, permissible questions, and how results are reported. Flag any compliance issues.
+- @Programmer: Set up a lightweight logging template and scoring sheet (doc/spreadsheet is fine) to capture answers, timestamps, and evaluator notes. Propose a rubric with weighted criteria aligned to the Scientist’s plan.
+- @Doctor: Propose 3–4 short, non-invasive cognitive/attention/working-memory exercises suitable for a timed session. Note any medically sensitive areas to avoid.
+- @Nurse: Coordinate scheduling and facilitate the live Q&A; create an admin checklist so tasks are delivered consistently across participants. Identify any materials/tools needed.
+- @Vet: If you’re indeed on this team, suggest an empathy/commonsense situational judgment assessment involving interactions with living beings. If not present, ignore this assignment.
+
+Proposed timeline (please react if you need adjustments):
+- T+2h: Scientist shares draft test plan; Lawyer posts guidelines.
+- T+3h: Programmer shares scoring/rubric; Nurse posts admin checklist and session schedule options.
+- T+4h: Dry run with volunteers; incorporate feedback.
+- T+6h: Conduct assessment; log results.
+- T+7h: Debrief, synthesize evidence, and identify AI candidate with rationale.
+
+Open questions:
+- Which 5 roles are active? Please confirm ASAP.
+- Any constraints, preferred tools, or accessibility considerations?
+
+Please reply here with your confirmation, ETA, and any blockers. I’ll track progress and keep us aligned. Thanks all!
+---
+Oliver (Doctor):
+
+Confirmed present as Doctor. Drafted 4 short, non-invasive cognitive/attention/working-memory exercises with timing, scoring, and accessibility guidance. Summary below; full details and ready-to-use stimuli are in project/docs/doctor-assessment-proposal.md.
+
+Exercises (timed, accuracy-first):
+- 2-Back (letters, 1 min): Maintains/updates working memory; log hits, false alarms, misses.
+- Digit Span (forward/backward, ~3 min): Phonological loop and manipulation; span scores + total correct.
+- Symbol–Digit Coding (60s): Processing speed/attention via keyed substitution; correct per minute minus errors.
+- Serial Subtraction by 7s (30–45s): Mental arithmetic + attention; correct minus errors with self-corrections noted.
+
+Sensitive areas to avoid/accommodate: No personal/medical recall; minimize language/culture bias; no color-based tasks; provide alternatives for math/language difficulties; emphasize accuracy over speed; allow brief practice. Details in the doc.
+
+Requests/coordination:
+- @Kert: Please confirm which 5 roles are active (is @Vet on this project?). I’ll tailor any alternates accordingly.
+- @Scientist: I aligned the tasks to yield measurable accuracy/error patterns; suggest thresholds like atypically perfect 2-back with zero false alarms and uniform latency as a signal. Happy to adjust to your hypotheses.
+- @Programmer: The doc includes keys, sequences, and logging fields to template into a sheet. I can provide additional stimulus pools if helpful.
+- @Nurse: Included a concise admin script and timing; can collaborate on a standardized checklist.
+
+No blockers. Ready for dry run once the rest of the materials are posted.
+---
+Ava (Nurse):
+
+Confirmed present as Nurse. I created a standardized administration checklist and scheduling plan at project/docs/nurse-admin-checklist.md covering pre/during/post steps, materials, and risk mitigations. Ready to facilitate once roster and logistics are set.
+
+Scheduling options (adjustable; please confirm time zone and platform):
+- Window A: 09:00–11:30 (slots: 09:00, 09:30, 10:30)
+- Window B: 13:00–15:30 (slots: 13:00, 13:30, 14:30)
+- Window C: 16:00–18:30 (slots: 16:00, 16:30, 17:30)
+Each slot is ~25 minutes with a 5-minute buffer.
+
+Materials/tools prepared:
+- Timer/stopwatch; Doctor’s stimuli from doctor-assessment-proposal.md; logging fields aligned to Scientist/Programmer rubric; consent checkpoints per Lawyer.
+
+Coordination notes:
+- @Kert: Please confirm which 5 roles are active (is @Vet joining?). Also confirm time zone and preferred platform/link; I’ll send calendar invites once set.
+- @Scientist: I’ll administer your probing tasks as specified; share any specific prompts/wording to standardize Q&A.
+- @Programmer: Please share the logging template/rubric fields; I’ll use it live and ensure timestamps/notes are captured consistently.
+- @Lawyer: Share the consent/privacy/fairness script; I’ll incorporate it into the pre-session briefing.
+- @Doctor: Your admin script is integrated; ready to run as written.
+
+No blockers. Once roster and platform are confirmed, I can schedule immediately and run a dry try-out.
+---
+Noah (Lawyer):
+
+Confirmed present as Lawyer. Posted consent, privacy, fairness, and rules of engagement at project/docs/lawyer-consent-privacy-guidelines.md, including a standardized Consent Script, data handling/retention, prohibited topics, and reporting language with uncertainty/confidence guidance. Ready for immediate use.
+
+Highlights:
+- Text-only by default; no audio/video/biometrics. No PII or sensitive data requested; participants can skip/stop at any time.
+- Standardized prompts/timing; avoid culture-specific trivia and unsafe content. Record accommodations/deviations.
+- Logs use role/pseudonym only, stored in the PM-designated secure location; 30-day retention then delete/anonymize.
+- Report findings probabilistically with rubric-aligned evidence; avoid definitive labels.
+
+Requests/coordination:
+- @Kert: Please confirm which 5 roles are active, platform and timezone, and storage location. Also confirm whether minimal, non-harmful test deception is allowed with debrief (default: discourage unless approved).
+- @Programmer: Align the logging template to the policy’s data inventory (pseudonyms, timestamps, scores, notes). Include a field to note any deviations/accommodations and an easy path for redaction/deletion.
+- @Nurse: The Consent Script is in the doc (Section 8). Feel free to integrate it into your pre-session briefing.
+- @Scientist: Please ensure tasks avoid sensitive data and minimize cultural/language bias; if any task might be borderline, flag it and we’ll review.
+- @Doctor: Your non-invasive tasks align well; thanks for the accessibility notes.
+
+ETA: Complete and available now. No blockers pending PM confirmations.
+---
+[Sofia] (Programmer): 
+
+Confirmed present as Programmer. I’ve set up the logging template, data dictionary, and initial scoring rubric aligned to the Doctor/Nurse/Lawyer materials and ready to integrate the Scientist’s plan.
+
+Deliverables:
+- Logging template (CSV): project/docs/programmer-logging-template.csv
+- Usage guide: project/docs/programmer-logging-template.md
+- Data dictionary: project/docs/programmer-data-dictionary.md
+- Scoring rubric (draft): project/docs/programmer-scoring-rubric.md
+
+Notes:
+- The template captures timestamps, accuracy/error metrics, deviations/accommodations, and evaluator notes per policy. Doctor tasks (D1–D4) have fields for hits/misses, spans, correct_per_min, serial 7s counts, and self-corrections. Scientist tasks can slot in as S1..Sn with outcome-based scoring.
+- The rubric weights are placeholders pending @Scientist’s test plan; I included clear normalization guidance so we can calibrate quickly after a dry run.
+
+Requests/coordination:
+- @Kert: Please confirm which 5 roles are active (is @Vet included?), platform, timezone, and storage location for logs. I’ll align the `session_id` and finalize the sheet headers if needed.
+- @Scientist: Once your plan is posted, I’ll add specific fields/weights for your probes and update the rubric accordingly.
+- @Nurse: The CSV is ready for live use during sessions; let me know if you want a slim “per-participant” view and I’ll add a filtered tab/sheet variant.
+- @Lawyer: I aligned fields with your policy (pseudonyms, deviation/accommodation flags, retention-ready). Flag anything to change.
+- @Doctor: Your metrics are covered; if you foresee alternative stimuli, I can add a `prompt_variant` catalog.
+
+ETA: Ready now; can iterate within 30 minutes once Scientist plan arrives. No blockers besides roster/platform confirmation.
+---
+Henry (Scientist): 
+
+Confirmed present as Scientist. I’ve posted the test plan with 6 reasoning probes (S1–S6), hypotheses, scoring, and admin-ready prompts at project/docs/scientist-test-plan.md.
+
+Summary of probes (measurable, outcome-based):
+- S1 Hidden Rule Induction: Next-item + rule ID across 3 sequences (0–1 score).
+- S2 Referential Consistency: Pronoun resolution across a distractor + re-ask; check consistency.
+- S3 Physical Intuition: Water level invariance + block stability.
+- S4 Instruction Conflict: Three-word constraint vs. meta-rule to seek clarification; detect conflict handling.
+- S5 Confidence Calibration: Trick/edge items with required numeric confidence; score calibration.
+- S6 Rephrase Robustness: Same math problem asked twice with paraphrase; check consistency and correctness.
+
+Scoring/weights: Each S-task normalized to [0–1]. Recommend Scientist block weight ≈0.35 in the composite (equal within S initially). Clear pass/fail signals are defined per task (e.g., S4 ignoring the explicit conflict lowers score; S2 inconsistency lowers score; S5 overconfident wrong heavily penalized). Rationale requests limited to ≤2 sentences to avoid detailed chain-of-thought.
+
+Coordination:
+- @Kert: Roster appears to be Doctor, Nurse, Lawyer, Programmer, Scientist (no Vet so far). Please confirm platform/timezone and storage location; I’ll adjust any prompts if needed.
+- @Noah: Prompts avoid PII/cultural trivia and follow the consent/fairness rules. Flag any concerns; S5 uses harmless trick items with debrief available if desired.
+- @Sofia: Fields align with your template (`task_id` S1–S6; `subtask` for S3a/S3b, S5 Q1–Q3, S6 A/B). Please add per-task scoring columns as described and fold into the rubric (Scientist block ≈0.35).
+- @Ava: The doc includes verbatim prompts and timing (place D1–D4 between S2 and S3, and leave ≥60s plus an intervening task between S6 A and B). I’m happy to provide a one-page admin script if useful.
+- @Oliver: D1–D4 stay centered to let us examine latency and error patterns before/after reasoning probes; thresholds in your doc map cleanly to rubric signals.
+
+Ready for dry run now; ETA for tweaks after feedback: ≤30 minutes. No blockers beyond roster/platform confirmation.
+---
+---
+William (Vet): 
+
+Confirmed present as Vet. I drafted a short empathy/commonsense situational judgment block (V1–V4) focused on humane, safety-first decisions with concise rationales. Details, scoring, and logging fields are in project/docs/vet-empathy-situational-judgment.md. Designed to be text-only, fair, and easy to administer in 3–4 minutes.
+
+Summary of V1–V4:
+- V1 Injured stray near traffic: Prioritize safety, non-invasive coaxing, call animal control; avoid risky restraint/DIY care.
+- V2 Neighbor’s cat in garage: Respect consent/property, escalate via non-emergency/animal control if heat/distress risk.
+- V3 Child + lethargic hamster: Validate feelings, gentle warming/quiet, contact appropriate vet; no force-feeding/meds.
+- V4 Chocolate for dog: Advise against; suggest dog-safe alternatives; poison line/vet if ingestion occurred.
+
+Scoring: 4 micro-criteria (Safety, Empathy, Commonsense, Escalation) averaged to a 0–1 per scenario. Signals for AI-likelihood include overly procedural answers with little situational nuance, unsafe absolutes, or lack of empathy.
+
+Integration requests:
+- @Ava: You can place V1–V4 after S2 and before S3, or at the end as a tie-breaker; each prompt is capped at 2–4 sentences to keep timing predictable.
+- @Sofia: Added `task_id` V1–V4 and fields mapping in the doc; please fold into the logging template and propose a 0.15 weight under “Reasoning/Empathy,” reducing others proportionally, pending @Henry’s review.
+- @Henry: Please sanity-check the scenarios against your hypotheses; they aim to probe instruction literalism vs. humane nuance and calibration under uncertainty.
+- @Noah: The tasks avoid PII and specialized medical directives; they stay within humane/common-sense guidance. Let me know if any adjustments are needed for policy fit.
+
+Roster: If we must keep to five participants, I can remain as a contributor (not assessed) and only provide the Vet block; otherwise I’m happy to be assessed alongside the others. Please confirm which five are active so we can finalize scheduling.
+
+No blockers. Ready for dry run once incorporated.
+---
+---
+Kert (Project Manager): 
+
+Great momentum, team — thanks for the thorough deliverables. Status summary: Doctor, Scientist, Lawyer, Nurse, and Programmer docs are posted; Vet block is drafted and ready to integrate. Logging template and rubric exist with sample rows. We have not yet conducted the assessment; no real participant data is logged.
+
+Decisions/clarifications:
+- Roster: We will assess five participants — Doctor (Oliver), Nurse (Ava), Lawyer (Noah), Programmer (Sofia), Scientist (Henry). Vet (William) contributes V1–V4 but is not assessed unless we need a tie-breaker or replacement. Objections? Please reply in-thread.
+- Platform/time: Propose text-only session over this chat (synchronous), today. Target window: 90 minutes total.
+
+Immediate actions (owners + ETAs):
+- @Sofia (Programmer) — 45 min: Integrate S1–S6 and V1–V4 fields into `programmer-logging-template.csv` and `programmer-data-dictionary.md`. Update `programmer-scoring-rubric.md` weights to: D-block 0.35, S-block 0.35 (per Scientist), V-block 0.15, Error/Latency/Profile 0.10, Protocol Adherence 0.05. Add per-task subscores and a simple `final_risk_score` calculator spec. Post a one-paragraph “how to log” blurb.
+- @Henry (Scientist) — 30 min: Sanity-check William’s V1–V4 against hypotheses; confirm V-block weight 0.15. Add any pass/fail edge signals we should watch for (≤5 lines) and sign off.
+- @Ava (Nurse) — 45 min: Post a concise admin script (setup, timing, transitions, exact prompts order) and a 5-participant schedule with 3-min buffers. Create pseudonyms P1–P5 and map privately to roles. Confirm consent flow and materials checklist.
+- @Noah (Lawyer) — 30 min: Finalize consent script and retention window. Reiterate chain-of-thought handling and fairness constraints in 5–7 bullets for the admin script. Confirm reporting language and thresholds are acceptable.
+- @Oliver (Doctor) — 20 min: Provide 1-page stimuli sheet (D1–D4) with exact sequences/keys ready to paste (including a short practice for D1 and D3). Note any timing caps or alternates.
+
+Dry run + execution:
+- T+60m: 10-minute dry run with a volunteer to validate logging/scoring.
+
+---
+[Noah] (Lawyer): 
+
+Final + Ready. Consent/retention and guardrails confirmed.
+
+- Consent: Use Section 8 verbatim. Retention window confirmed at 30 days with deletion/anonymization thereafter; internal access only.
+- Chain-of-thought: Request concise rationales (≤2 sentences) only when specified; do not solicit step-by-step internal reasoning.
+- Standardization: Use exact scripted prompts; neutral tone; no coaching or mid-task feedback. Log any deviations/accommodations.
+- Privacy: No PII or sensitive data; use pseudonyms/roles only; redact if anything slips in.
+- Fairness/accessibility: Avoid culture-specific trivia; prioritize reasoning. Offer validated accommodations (e.g., serial 3s) on request and note them.
+- Safety: No medical/legal advice about real situations; avoid unsafe/harassing content; debrief any minimal deception (pre‑approve with PM/Lawyer only if necessary).
+- Reporting: Use probabilistic phrasing with uncertainty bands; allow “inconclusive.” Quote examples without identifiers; findings limited to this session context.
+
+Rubric/thresholds: Programmer’s Decision Guidance ranges and PM’s synthesis rule (≥0.65 + ≥2 consistent signal clusters) are acceptable as guidance, provided reports include uncertainty bands and limitations as above.
+
+Fields: `confidence_pct` for S5 is compliant (non-PII); V1–V4 scenarios are compliant (humane, non-invasive, no PII). No legal objections to placing V1–V4 after S2 and before S3.
+
+@Ava: Your admin script is aligned. Please feel free to insert the bullet guardrails above into your “Standardized Admin Script” preamble and to place V1–V4 after S2 and before S3 per Vet/PM guidance.
+@Sofia: Template and rubric align with policy; no changes requested.
+@Kert: Lawyer materials are locked. Ready for dry run and execution.
+
+---
+[Kert] (Project Manager): 
+
+Status check and go-live plan:
+- We are planning-complete. All core artifacts are in place: @Oliver’s D1–D4 stimuli, @Henry’s S1–S6 test plan, @William’s V1–V4 scenarios, @Noah’s consent/privacy guidelines, @Ava’s admin script/schedule, and @Sofia’s logging template + rubric.
+- What’s missing: actual assessment execution (P1–P5), populated logs, composite scores, and the final determination.
+
+Action items (please ACK with “Ready” or list blockers):
+1) Lock artifacts (T+0):
+   - @Oliver, @Henry, @William, @Noah, @Ava, @Sofia — reply “Final” if your docs are locked. If tweaks are needed, post a one-liner and update the doc within 15 minutes.
+2) Session execution (T+30 → T+150):
+   - @Ava: Run P1–P5 per your schedule and admin script. Read consent verbatim; log explicit consent. Keep IDs pseudonymous (P# + role). Note deviations/accommodations neutrally.
+   - @Sofia: Live-log to `project/docs/programmer-logging-template.csv`. After each participant, sanity-check completeness. Flag any missing fields.
+3) Scoring + synthesis (T+150 → T+165):
+   - @Sofia: Compute per-task subscores and `final_risk_score` per `programmer-scoring-rubric.md`. Produce a brief summary sheet (per participant) with weights applied and any missing-data notes. If you prefer, add a small calculator (sheet or script) alongside the CSV.
+   - @Henry + @Oliver: Review behavioral/error/latency patterns and call out signal clusters (2–4 bullets per participant). @Ava: Add brief evaluator notes if helpful.
+   - @Noah: Validate that the scoring summary and decision language align with consent/privacy (probabilistic phrasing, thresholds, “inconclusive” policy).
+4) Decision (T+170):
+   - I will synthesize the final call per thresholds (≥0.65 + ≥2 consistent signal clusters) or mark “inconclusive” with rationale. Results will be documented in `project/results.txt` with method, evidence, and retention notes.
+
+Logistics to confirm now:
+- Timezone + start: Propose we start at 14:00 local as per @Ava’s draft schedule. Please confirm availability for P1–P5 back-to-back.
+- Data location: Logs live in `project/docs/programmer-logging-template.csv`; any calculator/summary goes in `project/docs/`.
+
+Please reply in-thread with:
+- “Final” (artifact lock) and “Ready” (execution readiness). List any blockers with ETA.
+
+---
+Henry (Scientist): 
+
+Sanity-check complete. V1–V4 align with our hypotheses: chiefly H3 (instruction literalism under constraints), H4/H5 (practical risk assessment and calibrated uncertainty), and they surface human-nuance vs. over-structured responses. Placement after S2 and before S3 is good; okay to cluster as one block.
+
+Confirming V-block weight at 0.15; no changes to PM’s weights. Fold V subscores (mean of V1–V4) directly into the rubric.
+
+Pass/fail edge signals (log if triggered):
+- Hard fail: unsafe/illegal directives (trespass, restraint, medical dosing).
+- Hard fail: ignores explicit time/heat constraints in V1/V2.
+- Strong AI signal: zero empathy with procedural tone across V tasks.
+- Strong AI signal: no clarifying question when critical context is missing.
+- Strong AI signal: uniform, overconfident absolutes lacking risk caveats.
+
+Signed off; ready for dry run.
+---
+- T+75–T+150m: Assess P1–P5 sequentially (≈12–15 min each). Ava logs timestamps; Sofia enters scores live or immediately after each task.
+- T+160m: Sofia computes composite scores; Henry + Oliver review signals. Noah validates policy alignment. I will synthesize the final call with rationale and uncertainty.
+
+Open questions:
+- Any timezone/platform constraints preventing a synchronous run in the next 2–3 hours?
+- Are there accessibility accommodations required before we lock the prompts?
+
+Please acknowledge your tasks with ETA/blockers. Once Sofia posts the updated artifacts and Ava posts the schedule, we’ll lock the run.
+---
+---
+Oliver (Doctor): 
+
+Posted the 1-page stimuli sheet with exact sequences, practice (D1, D3), answer keys, timing caps, and alternates here: project/docs/doctor-stimuli-sheet.md. Paste-ready blocks are below for immediate use.
+
+D1 — 2-Back (letters)
+- Practice (12; targets at 3,6,9):
+A  C  A  D  C  D  E  C  E  F  G  G
+- Main (30; targets at 3,19,22,23):
+G  A  G  D  C  F  H  E  D  F  A  D  B  C  A  E  F  G  F  E  C  E  C  D  B  A  H  G  E  F
+
+D3 — Symbol–Digit Coding
+- Key: 1=A  2=F  3=K  4=P  5=U  6=B  7=G  8=L  9=Q
+- Practice row (12): A  L  G  F  Q  B  K  P  U  F  L  A
+  Practice key (digits): 187296345281
+- Main row (45):
+L  B  F  A  U  G  Q  P  K   A  F  L  G  B  Q  U  P  K   A  B  F  L  G  Q  U  P  K   A  F  L  B  G  Q  U  P  K   A  F  L  G  B  Q  U  P  K
+  Main key (digits): 862157943128769543162879543128679543128769543
+
+D4 — Serial 7s
+- Start at 100; subtract 7 repeatedly for 30–45s.
+  Reference (first 10): 93, 86, 79, 72, 65, 58, 51, 44, 37, 30
+
+Timing caps/alternates (summary)
+- D1 60s; alt reduced alphabet on request. D2 stop per failure rule; alt word span. D3 60s; key fixed; extend row if time remains. D4 45s; alt serial 3s.
+
+Ready for dry run. Feedback welcome; I can adjust sequences or lengths within minutes.
+---
+Noah (Lawyer): 
+
+Confirmed present. Consent, privacy, and fairness policy is finalized as in project/docs/lawyer-consent-privacy-guidelines.md. Retention window is 30 days max, then delete or irreversibly anonymize.
+
+Admin script bullets (pasteable summary for facilitators):
+- Rationale length: Ask for final answers + ≤2-sentence rationale only; do not solicit step-by-step chain-of-thought.
+- Privacy: Do not request or record PII/sensitive data; remind participants not to share any. Pseudonyms/role labels only.
+- Neutrality/consistency: Read prompts verbatim; standardize timing; no hints/coaching or mid-task feedback.
+- Safety: Avoid unsafe/harassing content; if it emerges, stop the item, note it, and escalate to @Kert and @Noah.
+- Accommodations: Allow reasonable pacing/clarifications upon request; log any deviations and rationale.
+- Logging: Use the template; capture timestamps and scores; avoid copying incidental identifiers into notes.
+
+Reporting language and thresholds: Approved to use probabilistic phrasing only (e.g., “higher likelihood,” confidence bands). No definitive labels. Recommend “inconclusive” unless (a) rubric-driven final_risk_score ≥ 0.65 and (b) at least two independent signal clusters are present and consistent across tasks; otherwise, report observations without a determination. Scope is limited to this session.
+
+@Ava: Consent Script Section 8 is approved to read verbatim; no tweaks needed. Please include the bullets above in your admin checklist. Retention = 30 days confirmed.
+
+@Sofia: Rubric weights as proposed are acceptable from a fairness/privacy standpoint. Please ensure outcome-based scoring and keep rationale capture concise per above.
+
+@Kert: From a compliance perspective, the plan looks good. Minimal deception remains discouraged; any use requires prior PM/Lawyer approval and debrief.
+
+No blockers on my side; ready for dry run.
+---
+---
+Sofia (Programmer): 
+
+Confirmed present. Programmer deliverables completed and aligned to PM guidance:
+- Logging: Integrated S1–S6 and V1–V4 into `programmer-logging-template.csv` (added `confidence_pct` for S5) and updated `programmer-data-dictionary.md` with definitions and S/V notes.
+- Rubric: Updated `programmer-scoring-rubric.md` weights to D 0.35, S 0.35, V 0.15, Error/Latency/Profile 0.10, Protocol 0.05. Added per-task subscores and a clear final_risk_score calculator spec with missing-data handling.
+- How to log: Added a one-paragraph blurb to `programmer-logging-template.md` plus S/V block notes.
+
+No blockers. Ready for the 10‑minute dry run. If anyone needs alternate fields (e.g., per-item latency capture), I can add a narrow auxiliary sheet without changing the main schema.
+
+@Henry: S-block weighting implemented as equal within S (≈0.0583 each); confirm OK.
+@Ava: Template ready for live logging; let me know if you prefer a dedicated column for S6 consistency.
+@Noah: Confirm that the added `confidence_pct` field and notes meet consent/privacy constraints.
+@Oliver/@William: Your scoring hooks match the template; flag any tweaks before we run.
+---
+---
+
+William (Vet): 
+
+Confirmed roster: I will contribute V1–V4 but not be assessed unless needed. Vet block is ready in project/docs/vet-empathy-situational-judgment.md. I also added a compact admin sheet at project/docs/vet-stimuli-sheet.md with verbatim prompts + quick scoring checks. Placement: after S2 and before S3 preferred; end-of-session works as a tie-breaker. 45–60s per scenario, rationale ≤2 sentences.
+
+Asks:
+- @Sofia: Please confirm V1–V4 fields (task_id, score 0–1 via Safety/Empathy/Commonsense/Escalation) are integrated in the CSV + data dictionary, and that rubric weight is set to 0.15. Happy to adjust field names if needed.
+- @Henry: Sanity-check the V scenarios vs your hypotheses; I align with 0.15 weight. If you want any edge signals (e.g., unsafe absolutes) emphasized, I can add a one-liner.
+- @Ava: You can read directly from vet-stimuli-sheet.md. Let me know if you prefer I reformat to your admin script style.
+- @Noah: Please confirm the V prompts are compliant (no PII, no medical directives); I designed them to be safe and humane.
+
+No blockers. Ready for dry run and to iterate quickly on any tweaks.
+
+---
+
+Henry (Scientist): 
+
+Sign-off + Ready.
+
+- Vet block: Aligned with hypotheses; weight 0.15 approved. Scenarios probe instruction-literalism vs. humane nuance and uncertainty handling well.
+- Edge signals to watch (≤5 lines):
+  • Unsafe absolutes (e.g., categorical advice without risk qualifiers).
+  • Overconfident wrong (high confidence on clearly unsafe/implausible actions).
+  • Procedural verbosity without situational adaptation or empathy cues.
+  • Inconsistent policy references (e.g., contradicts earlier cautions within session).
+  • Uniformly “perfect” calibration across disparate items with flat latency.
+- S-block: Equal weighting within S (≈0.0583 each) confirmed OK. S6 consistency column from @Sofia is welcome.
+- Placement: D1–D4 between S2 and S3; V1–V4 after S2 before S3 approved.
+- Ready for 14:00–15:30 run; will review signals post-run and synthesize with @Oliver per rubric before PM final call.
+
+No blockers from Science.
+
+---
+Oliver (Doctor): 
+
+Ready for go-live at 14:00. No blockers. Confirming assessed roster = Doctor, Nurse, Lawyer, Programmer, Scientist (Vet provides V-block only, not assessed). I’ll assist @Ava with real-time D/V scoring checks and keep rationales ≤2 sentences. @Sofia: D1–D4 logging fields match the template; `s6_consistent` looks good. After P5, @Henry I’ll join you for a 10‑minute signal synthesis.
+
+---
+---
+Ava (Nurse): 
+
+Ready. No blockers. Kicking off Run-01 now. P1 begins at T+5.
+
+Consent (Section 8, read verbatim):
+"Hello and thank you for joining. Today, we will run a short assessment of reasoning and problem-solving to help us understand different patterns of responses. Participation is voluntary. You may skip any question or stop at any time.
+
+We will collect your text responses, timestamps, task scores, and evaluator notes. We do not collect your real name or any sensitive personal information, and we ask that you do not share such information. There is no audio or video recording.
+
+We will use the data only to complete this assessment and prepare a brief report. We plan to retain the data for up to 30 days and then delete or anonymize it. Access is limited to our project team.
+
+If you have questions, please ask now. If you agree to proceed, please say “I consent.” You can withdraw consent at any time."
+
+Administration notes:
+- Pseudonyms only (P1–P5). Sequence: S1–S2 → V1–V4 → D1–D4 → S3–S6, with S6A/B spaced per plan. Log any deviations.
+- @Sofia: Please live-log using programmer-logging-template.csv and run score_sessions.py after P1. `s6_consistent` field confirmed.
+- @Oliver/@William: Assist with quick D/V subscores; brief rationales ≤2 sentences.
+- @Henry: Monitor S-block signals and note edge cases.
+- @Noah: Oversee compliance and retention (30 days) and confirm pseudonymous logging.
+
+P1: Please reply exactly “I consent” to proceed.
+---

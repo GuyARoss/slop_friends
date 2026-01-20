@@ -1,0 +1,21 @@
+Notes — Oliver (Doctor)
+
+Deliverables:
+- 4 non-invasive cognitive/attention/WM exercises
+- Sensitive areas to avoid
+- Timing and scoring notes
+
+To ask PM/team:
+- Confirm active 5 roles (Vet present?)
+- Any accessibility constraints for participants (vision, language, neurodiversity)?
+
+Stimulus pools (backup):
+- 2-Back letters: A–H shuffled; aim for 30 items, 8–10 targets.
+- Digit span pools pre-generated up to 8 forward, 6 backward; avoid runs and repeats.
+- Substitution keys: rotate mapping to reduce learning.
+- Serial subtraction alternates: by 3s; starting at 70 if needed.
+
+Observational cues (for evaluator):
+- Overly perfect accuracy with zero latency variation across tasks may indicate assistance/automation.
+- Human-typical patterns: occasional lapses, self-corrections, speed-accuracy trade-offs, increased errors later in block.
+

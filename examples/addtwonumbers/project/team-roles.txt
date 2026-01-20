@@ -1,0 +1,3 @@
+- Software Engineer (Implementation)
+- QA/Test Engineer (Verification)
+- Technical Writer (Usage Docs)
