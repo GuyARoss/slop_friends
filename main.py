@@ -137,6 +137,9 @@ class Position:
         return f"Your name is {self.name} a {self.role}"
 
 def read_roles(project_dir) -> List[Position]:
+    if not os.path.exists(project_dir+"/project/team-roles.txt"):
+        return []
+
     pos = []
     with open(project_dir+"/project/team-roles.txt") as f:
         for l in f.readlines():
